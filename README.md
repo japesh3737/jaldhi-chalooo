@@ -1,6 +1,6 @@
 # Smart Delivery Route Planner
 
-A complete local Django application: a responsive landing page, guest route planner, Python route optimization, Leaflet maps, accounts, and private saved routes. Uses exactly two UI brand colors—navy `#102A43` and teal `#007F78`—with neutral supporting colors. Photography retains natural colors; map tiles are visually desaturated.
+A complete local Django application: a responsive landing page, guest route planner, Python route optimization, Leaflet maps, accounts, and private saved routes. Uses exactly two UI brand colorsâ€”navy `#102A43` and teal `#007F78`â€”with neutral supporting colors. Photography retains natural colors; map tiles are visually desaturated.
 
 The website is localised for India: New Delhi sample locations, Indian street photography, kirana/parcel delivery examples, address hints for shop numbers, landmarks and PIN codes, and saved-route timestamps in IST (`Asia/Kolkata`). The interface remains in English. The sample uses approximate points around public landmarks, not verified delivery entrances or real customer addresses. Coordinates still support locations elsewhere in India; arbitrary address search requires the configured geocoder described below. Existing user-saved routes are preserved.
 
@@ -18,7 +18,7 @@ Copy-Item .env.example .env
 .\.venv\Scripts\python.exe manage.py runserver 127.0.0.1:8000
 ```
 
-Open **http://127.0.0.1:8000/**. Leave the terminal running; press Ctrl+C to stop. On subsequent runs, use only the final command. If `.venv`, `.env`, and the database already exist, keep them—do not overwrite your secret or database. This delivered workspace has already been configured and migrated.
+Open **http://127.0.0.1:8000/**. Leave the terminal running; press Ctrl+C to stop. On subsequent runs, use only the final command. If `.venv`, `.env`, and the database already exist, keep themâ€”do not overwrite your secret or database. This delivered workspace has already been configured and migrated.
 
 If the `py` launcher is unavailable but `python` works, substitute `python` for `py -3.12`. No activation script or PowerShell execution-policy change is needed.
 
@@ -65,7 +65,7 @@ For use away from the same Wi-Fi or while the computer is off, deploy Django to 
 3. Select **Optimize route**. Demo mode uses straight-line distances and an assumed 25 km/h speed; it needs no paid key or routing network connection.
 4. Switch between **Suggested order** and **Original order** to compare the map, totals, and itinerary. Toggle return to start to try an open route.
 5. Download **CSV**. CSV always exports the suggested itinerary, including the start, return leg if selected, notes, per-leg values, and total.
-6. Register using the **Sign in → Create an account** link. Open the planner, name your route, and save it. Use **My routes** to reopen, rename, or delete it.
+6. Register using the **Sign in â†’ Create an account** link. Open the planner, name your route, and save it. Use **My routes** to reopen, rename, or delete it.
 
 The landing-page preview is calculated in Python from the same sample data used by the planner. No fictional business claims, testimonials, ratings, or customer logos are present.
 
@@ -79,7 +79,7 @@ No default account or password is supplied. `seed_sample` never creates credenti
 
 ## Using the planner
 
-- A starting point and **1–20 customer stops** are required. A single stop is valid, though there is no order to improve.
+- A starting point and **1â€“20 customer stops** are required. A single stop is valid, though there is no order to improve.
 - Every point needs a name and valid coordinates. The address can be blank for coordinate-only points; delivery notes are optional, up to 1,000 characters.
 - Add, edit, remove, or reorder stops with the up/down buttons. Stop headings can collapse their fields.
 - **Find address** is an explicit search, never autocomplete. Select one of the results and review its map position. In the default demo, only the five bundled New Delhi landmark addresses are searchable.
@@ -112,7 +112,7 @@ Use `.env`; secrets are never committed. `.env.example` lists supported settings
 
 ### Road routing
 
-Select **Road routing · OSRM**. The default public OSRM demo endpoint requires no API key and is intended for modest demonstration usage. It is best-effort, has no uptime guarantee, and must not be used as an unrestricted production dependency. Use a self-hosted OSRM instance or a contracted compatible endpoint for real usage, and honor that provider's terms and request limits. Backend requests are serialized and spaced by the configured interval in this **single-process** setup; there are no automatic retries or background polling.
+Select **Road routing Â· OSRM**. The default public OSRM demo endpoint requires no API key and is intended for modest demonstration usage. It is best-effort, has no uptime guarantee, and must not be used as an unrestricted production dependency. Use a self-hosted OSRM instance or a contracted compatible endpoint for real usage, and honor that provider's terms and request limits. Backend requests are serialized and spaced by the configured interval in this **single-process** setup; there are no automatic retries or background polling.
 
 The adapter uses OSRM's table service for road distance costs, and route service for geometry and per-leg distances/durations. Coordinates are sent to the configured provider; customer names, notes, and address strings are not sent to OSRM. Documentation: https://project-osrm.org/docs/v5.23.0/api/.
 
@@ -196,3 +196,8 @@ Do not commit `.env`, the SQLite database, or customer data. The app does not de
 ## Adding verified testimonials
 
 There is intentionally **no public testimonials section** because none were supplied. To add one later, obtain the person's permission, keep a record of the approved quote/name and permission date, then add their exact approved text to `templates/planner/home.html`. Do not manufacture ratings, logos, quotes, or performance claims. The stock photograph is illustrative and is not an endorsement.
+
+
+## Temporary Render demo
+
+Use `bash build.sh` as the build command and `bash start.sh` as the start command. Leave Root Directory blank. Set DJANGO_SECRET_KEY to a fresh generated secret and DJANGO_DEBUG to False. DATABASE_URL is optional: remove the variable entirely to use local SQLite. The start script recreates missing database tables on startup. On Render this database is temporary: accounts and saved routes may disappear on restart, sleep, or redeploy. Use only disposable demo data. Configure a persistent PostgreSQL DATABASE_URL for lasting storage.

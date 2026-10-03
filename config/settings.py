@@ -18,8 +18,7 @@ if RENDER_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_HOSTNAME}')
 if os.getenv('RENDER') == 'true':
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    if not os.getenv('DATABASE_URL'):
-        raise ImproperlyConfigured('Set DATABASE_URL to your Render PostgreSQL internal URL.')
+    # Demo deployments use temporary SQLite when DATABASE_URL is absent.
 
 INSTALLED_APPS = ['django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes',
                   'django.contrib.sessions', 'django.contrib.messages', 'django.contrib.staticfiles', 'planner']
@@ -33,7 +32,8 @@ TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates', 'DIR
               'django.contrib.auth.context_processors.auth', 'django.contrib.messages.context_processors.messages',
               'planner.context_processors.map_settings']}}]
 WSGI_APPLICATION = 'config.wsgi.application'
-DATABASES = {'default': dj_database_url.config(default=f'sqlite:///{BASE_DIR / "db.sqlite3"}', conn_max_age=60)}
+DATABASE_URL = os.getenv('DATABASE_URL', '').strip() or f'sqlite:///{BASE_DIR / "db.sqlite3"}'
+DATABASES = {'default': dj_database_url.parse(DATABASE_URL, conn_max_age=60)}
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
